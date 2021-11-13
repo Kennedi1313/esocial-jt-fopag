@@ -1,0 +1,37 @@
+version: "3.5"
+services:
+  app:
+    image: tstlabs/esocial-jt-service:latest
+    container_name: esocial-lagoa-pedra-service
+    ports:
+      - "8005:8005"
+    depends_on:
+      - db
+    networks:
+      - esocial-net
+    volumes:
+      - "./config:/config"
+    environment:
+      - spring.datasource.url=jdbc:postgresql://esocial-lagoa-pedra-db/postgres
+    deploy:
+      resources:
+        limits:
+          memory: 400M
+        reservations:
+          memory: 300M
+
+  db:
+    image: postgres:10
+    container_name: esocial-lagoa-pedra-db
+    volumes:
+      - "/var/lib/postgresql/data"
+    ports:
+      - "5:5"
+    networks:
+      - esocial-net
+    environment:
+      - POSTGRES_PASSWORD=esocial
+
+networks:
+  esocial-net:
+    driver: bridge

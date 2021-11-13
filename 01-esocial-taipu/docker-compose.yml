@@ -1,0 +1,37 @@
+version: "3.5"
+services:
+  app:
+    image: tstlabs/esocial-jt-service:latest
+    container_name: esocial-taipu-service
+    ports:
+      - "8001:8001"
+    depends_on:
+      - db
+    networks:
+      - esocial-net
+    volumes:
+      - "./config:/config"
+    environment:
+      - spring.datasource.url=jdbc:postgresql://esocial-taipu-db/postgres
+    deploy:
+      resources:
+        limits:
+          memory: 400M
+        reservations:
+          memory: 300M
+
+  db:
+    image: postgres:10
+    container_name: esocial-taipu-db
+    volumes:
+      - "/var/lib/postgresql/data"
+    ports:
+      - "1:1"
+    networks:
+      - esocial-net
+    environment:
+      - POSTGRES_PASSWORD=esocial
+
+networks:
+  esocial-net:
+    driver: bridge
