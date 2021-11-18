@@ -90,6 +90,14 @@ public class ConsultaEvento {
 		return this;
 	}
 
+	public ConsultaEvento foraDosTipos(TipoEvento... tipos) {
+		if (tipos != null && tipos.length > 0) {
+			campos.add(" e.tipoEvento not in :tipos ");
+			parametros.put("tipos", Arrays.asList(tipos));
+		}
+		return this;
+	}
+
 	public ConsultaEvento nosEstados(Estado... estados) {
 		if (estados != null && estados.length > 0) {
 			campos.add(" e.estado in :estados ");

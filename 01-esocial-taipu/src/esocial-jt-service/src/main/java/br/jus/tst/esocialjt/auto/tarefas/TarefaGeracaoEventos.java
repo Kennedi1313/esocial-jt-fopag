@@ -22,7 +22,7 @@ public class TarefaGeracaoEventos implements Tarefa{
 	public boolean executar() {
 		List<Ocorrencia> ocorrencias = ocorrenciaServico.recuperaOcorrenciasSemEventos();
 		if(! ocorrencias.isEmpty()) {
-			LOGGER.info("Gerando eventos para " + ocorrencias.size() + " ocorrencias");
+			LOGGER.info("Gerando eventos pra testar essas " + ocorrencias.size() + " ocorrencias");
 		}
 		ocorrencias.forEach(ocorrenciaServico::gerarEvento);
 		return true;

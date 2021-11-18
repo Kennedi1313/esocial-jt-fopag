@@ -67,8 +67,7 @@ public class OcorrenciaServico {
 	public Ocorrencia gerarEvento(Ocorrencia ocorrencia) {
 		String referencia = ocorrencia.getReferencia();
 		TipoEvento tipoEvento = tipoEventoServico.obterTipoEventoEsocial(ocorrencia.getTipoOcorrencia());
-
-		if (!deveAguardarGeracaoEvento(tipoEvento, referencia)) {
+		if(!deveAguardarGeracaoEvento(tipoEvento, referencia)) {
 			Evento evento = eventoServico.gerarEvento(ocorrencia, tipoEvento);
 			ocorrencia.setEvento(evento);
 			atualizarOperacaoTabela(ocorrencia);
@@ -109,8 +108,12 @@ public class OcorrenciaServico {
 
 	public boolean deveAguardarGeracaoEvento(TipoEvento tipoEvento, String referencia) {
 		return eventoServico.criarConsulta()
-				.dosTipos(tipoEvento)
-				.nosEstados(Estado.EM_FILA, Estado.PROCESSAMENTO)
-				.comReferencias(referencia).existe();
+					.dosTipos(tipoEvento)
+					.nosEstados(Estado.PROCESSAMENTO)
+					.comReferencias(referencia).existe() || 
+				eventoServico.criarConsulta()
+					.foraDosTipos(tipoEvento)
+					.nosEstados(Estado.EM_FILA, Estado.PROCESSAMENTO)
+					.comReferencias(referencia).existe();
 	}
 }
