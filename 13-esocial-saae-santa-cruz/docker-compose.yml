@@ -1,0 +1,37 @@
+version: "3.5"
+services:
+  app:
+    image: tstlabs/esocial-jt-service:latest
+    container_name: esocial-saae-santa-cruz-service
+    ports:
+      - "8013:8013"
+    depends_on:
+      - db
+    networks:
+      - esocial-net
+    volumes:
+      - "./config:/config"
+    environment:
+      - spring.datasource.url=jdbc:postgresql://esocial-saae-santa-cruz-db/postgres
+    deploy:
+      resources:
+        limits:
+          memory: 400M
+        reservations:
+          memory: 300M
+
+  db:
+    image: postgres:10
+    container_name: esocial-saae-santa-cruz-db
+    volumes:
+      - "/var/lib/postgresql/data"
+    ports:
+      - "13:13"
+    networks:
+      - esocial-net
+    environment:
+      - POSTGRES_PASSWORD=esocial
+
+networks:
+  esocial-net:
+    driver: bridge
