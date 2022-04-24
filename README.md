@@ -1,7 +1,7 @@
 # esocial-jt-fopag
 
 ## Instruções:
-Cada container é um projeto do esocial-jt para uma ciade específica, tem seu proprio banco de dados mas todas utilizam a mesma imagem do esocial-jt (que está na pasta esocial-jt).
+Cada container é um projeto do esocial-jt para uma ciade específica e tem seu proprio banco de dados mas todas utilizam a mesma imagem do esocial-jt (que está na pasta esocial-jt).
 
 ### Para atualizar a imagem do projeto esocial-jt:
 1. Atualize a pasta com o código fonte através do git 
@@ -14,11 +14,11 @@ Cada container é um projeto do esocial-jt para uma ciade específica, tem seu p
 	```
 3. Exclua todos os containers parados 
 	```
-	docker ps -a |  grep "service" | awk '{print $1}' | xargs docker rmi
+	docker ps -a |  grep "service" | awk '{print $1}' | xargs docker rm
 	```
-4. Builde o projeto esocial-jt 
+4. Exclua a imagem já existente
 	```
-	mvn clean install
+	docker images -a | grep "service" | awk '{print $3}' | xargs docker rmi
 	```
 5. Builde uma imagem a partir de um dockerfile 
 	```
