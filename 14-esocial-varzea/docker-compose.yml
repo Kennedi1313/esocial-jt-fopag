@@ -2,7 +2,7 @@ version: "3.5"
 services:
   app:
     image: tstlabs/esocial-jt-service:latest
-    container_name: esocial-varzea
+    container_name: esocial-varzea-service
     ports:
       - "8014:8014"
     depends_on:
